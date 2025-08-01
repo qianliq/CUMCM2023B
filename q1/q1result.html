@@ -1,0 +1,168 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>Q1 Jupyter Notebook 输出结果</title>
+        <style>
+            body { 
+                font-family: 'Arial', sans-serif; 
+                margin: 40px; 
+                line-height: 1.6;
+                color: #333;
+            }
+            h1 { 
+                color: #2c3e50; 
+                text-align: center; 
+                border-bottom: 3px solid #3498db;
+                padding-bottom: 10px;
+            }
+            h2 { 
+                color: #34495e; 
+                border-bottom: 1px solid #bdc3c7; 
+                padding-bottom: 5px;
+                margin-top: 30px;
+            }
+            .text { 
+                margin: 15px 0; 
+                white-space: pre-wrap; 
+                background: #f8f9fa;
+                padding: 10px;
+                border-left: 4px solid #3498db;
+                font-family: 'Courier New', monospace;
+            }
+            .result {
+                margin: 15px 0; 
+                white-space: pre-wrap; 
+                background: #e8f5e8;
+                padding: 10px;
+                border-left: 4px solid #27ae60;
+                font-family: 'Courier New', monospace;
+            }
+            .error { 
+                color: #e74c3c; 
+                background: #fdf2f2;
+                padding: 10px;
+                border-left: 4px solid #e74c3c;
+                margin: 15px 0;
+                font-family: 'Courier New', monospace;
+            }
+            .image-container { 
+                text-align: center; 
+                margin: 20px 0; 
+                padding: 10px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .image-container img { 
+                max-width: 100%; 
+                height: auto; 
+                border: 1px solid #ddd;
+                border-radius: 3px;
+            }
+            .cell-header {
+                background: #3498db;
+                color: white;
+                padding: 8px 15px;
+                margin: 20px 0 10px 0;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+            @media print {
+                body { margin: 20px; }
+                .image-container img { max-width: 90%; }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Q1 Jupyter Notebook 输出结果</h1>
+    <div class='cell-header'>Cell 1 输出</div>
+<div class='text'>库导入完成！
+</div>
+<div class='cell-header'>Cell 2 输出</div>
+<div class='text'>开角: 120°
+坡度: 1.5°
+中心点水深: 70m
+计算位置: [-800, -600, -400, -200, 0, 200, 400, 600, 800]
+
+数学模型函数定义完成！
+</div>
+<div class='cell-header'>Cell 3 输出</div>
+<div class='text'>测线间距: 200m
+
+开始计算各位置的指标值：
+
+位置 -800m: 水深= 90.95m, 覆盖宽度=315.71m, 重叠率=—
+位置 -600m: 水深= 85.71m, 覆盖宽度=297.53m, 重叠率=35.83
+位置 -400m: 水深= 80.47m, 覆盖宽度=279.35m, 重叠率=31.66
+位置 -200m: 水深= 75.24m, 覆盖宽度=261.17m, 重叠率=26.90
+位置    0m: 水深= 70.00m, 覆盖宽度=242.99m, 重叠率=21.43
+位置  200m: 水深= 64.76m, 覆盖宽度=224.81m, 重叠率=15.08
+位置  400m: 水深= 59.53m, 覆盖宽度=206.63m, 重叠率=7.61
+  ⚠️  位置 600m 存在漏测风险，重叠率为负值
+位置  600m: 水深= 54.29m, 覆盖宽度=188.45m, 重叠率=-1.31
+  ⚠️  位置 800m 存在漏测风险，重叠率为负值
+位置  800m: 水深= 49.05m, 覆盖宽度=170.27m, 重叠率=-12.12
+
+计算完成！
+
+🔍 重叠率分析:
+   - 存在漏测的测线数量: 2
+   - 重叠率为负值表示该位置存在漏测（η &lt; 0）
+   - 建议减小测线间距或采用变间距设计
+
+=== 问题1计算结果表 ===
+ 测线距中心点处的距离/m  海水深度/m  覆盖宽度/m 与前一条测线的重叠率/%
+         -800   90.95  315.71            —
+         -600   85.71  297.53        35.83
+         -400   80.47  279.35        31.66
+         -200   75.24  261.17        26.90
+            0   70.00  242.99        21.43
+          200   64.76  224.81        15.08
+          400   59.53  206.63         7.61
+          600   54.29  188.45        -1.31
+          800   49.05  170.27       -12.12
+</div>
+<div class='cell-header'>Cell 4 输出</div>
+<div class='error'>错误: /var/folders/92/2r6wf2gx7cg9v0djz53c4nc40000gn/T/ipykernel_49522/2822932153.py:15: UserWarning: color is redundantly defined by the 'color' keyword argument and the fmt string "ro-" (-&gt; color='r'). The keyword argument will take precedence.
+  ax2.plot(positions, [results['覆盖宽度/m'][i] for i in range(len(positions))],
+/var/folders/92/2r6wf2gx7cg9v0djz53c4nc40000gn/T/ipykernel_49522/2822932153.py:31: UserWarning: color is redundantly defined by the 'color' keyword argument and the fmt string "go-" (-&gt; color='g'). The keyword argument will take precedence.
+  ax3.plot(overlap_positions, overlap_values, 'go-', linewidth=2, markersize=8,
+</div>
+<div class='text'>&lt;Figure size 1500x1200 with 4 Axes&gt;</div>
+
+            <div class='image-container'>
+                <img src='cell_4_output_1.png' alt='Notebook输出图片' />
+                <p><em>图片已保存为: image_cell_4_output_1.png</em></p>
+            </div>
+<div class='text'>&lt;Figure size 1200x800 with 1 Axes&gt;</div>
+
+            <div class='image-container'>
+                <img src='cell_4_output_2.png' alt='Notebook输出图片' />
+                <p><em>图片已保存为: image_cell_4_output_2.png</em></p>
+            </div>
+<div class='cell-header'>Cell 5 输出</div>
+<div class='text'>结果已保存到 result1.xlsx
+
+文件包含以下工作表：
+1. 问题1计算结果 - 主要计算结果
+2. 参数设置 - 题目参数
+3. 数学模型 - 使用的数学公式
+
+============================================================
+                    最终结果表
+============================================================
+ 测线距中心点处的距离/m  海水深度/m  覆盖宽度/m 与前一条测线的重叠率/%
+         -800   90.95  315.71            —
+         -600   85.71  297.53        35.83
+         -400   80.47  279.35        31.66
+         -200   75.24  261.17        26.90
+            0   70.00  242.99        21.43
+          200   64.76  224.81        15.08
+          400   59.53  206.63         7.61
+          600   54.29  188.45        -1.31
+          800   49.05  170.27       -12.12
+============================================================
+</div>
+</body></html>
