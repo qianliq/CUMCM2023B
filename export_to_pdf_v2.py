@@ -257,8 +257,9 @@ def create_html_with_images(content_items, title):
 
 def convert_html_to_pdf(html_file, pdf_file):
     """使用系统工具将HTML转换为PDF"""
+    
+    # 方法1: 尝试使用wkhtmltopdf
     try:
-        # 尝试使用wkhtmltopdf
         result = subprocess.run([
             'wkhtmltopdf', 
             '--page-size', 'A4',
@@ -279,8 +280,47 @@ def convert_html_to_pdf(html_file, pdf_file):
     except FileNotFoundError:
         pass
     
+    # 方法2: 尝试使用Chrome/Chromium的无头模式 (Windows友好)
     try:
-        # 尝试使用weasyprint
+        # 尝试多个可能的Chrome路径
+        chrome_paths = [
+            r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+            r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+            r'C:\Users\%s\AppData\Local\Google\Chrome\Application\chrome.exe' % os.getenv('USERNAME', ''),
+            'chrome',  # 如果在PATH中
+            'chromium',
+            'chromium-browser'
+        ]
+        
+        for chrome_path in chrome_paths:
+            if chrome_path.startswith('C:') and not os.path.exists(chrome_path):
+                continue
+                
+            try:
+                html_full_path = os.path.abspath(html_file)
+                result = subprocess.run([
+                    chrome_path,
+                    '--headless',
+                    '--disable-gpu',
+                    '--print-to-pdf=' + os.path.abspath(pdf_file),
+                    '--print-to-pdf-no-header',
+                    '--no-margins',
+                    'file:///' + html_full_path.replace('\\', '/')
+                ], capture_output=True, text=True, timeout=30)
+                
+                if result.returncode == 0 and os.path.exists(pdf_file):
+                    return True, "Chrome"
+                else:
+                    if result.stderr:
+                        print(f"Chrome错误 ({chrome_path}): {result.stderr}")
+            except (FileNotFoundError, subprocess.TimeoutExpired):
+                continue
+                
+    except Exception as e:
+        print(f"Chrome转换出错: {str(e)}")
+    
+    # 方法3: 尝试使用weasyprint (可能在Windows上有问题)
+    try:
         result = subprocess.run([
             'weasyprint', 
             html_file, 
@@ -292,6 +332,28 @@ def convert_html_to_pdf(html_file, pdf_file):
         else:
             print(f"weasyprint错误: {result.stderr}")
     except FileNotFoundError:
+        pass
+    
+    # 方法4: 尝试使用 pdfkit (需要先安装 pip install pdfkit)
+    try:
+        import pdfkit
+        
+        options = {
+            'page-size': 'A4',
+            'orientation': 'Portrait',
+            'margin-top': '20mm',
+            'margin-right': '20mm',
+            'margin-bottom': '20mm',
+            'margin-left': '20mm',
+            'encoding': "UTF-8",
+            'no-outline': None,
+            'enable-local-file-access': None
+        }
+        
+        pdfkit.from_file(html_file, pdf_file, options=options)
+        if os.path.exists(pdf_file):
+            return True, "pdfkit"
+    except (ImportError, Exception) as e:
         pass
     
     return False, None
@@ -366,9 +428,16 @@ def main():
             print(f'未找到notebook文件: {notebook_path}')
     
     print("\n导出完成!")
-    print("如果PDF转换失败，请安装以下工具之一:")
-    print("  - wkhtmltopdf: brew install wkhtmltopdf")
-    print("  - weasyprint: pip3 install weasyprint")
+    print("如果PDF转换失败，有以下解决方案:")
+    print("  Windows推荐方案:")
+    print("    1. 使用Chrome浏览器打开HTML文件，按Ctrl+P打印为PDF")
+    print("    2. 安装wkhtmltopdf: https://wkhtmltopdf.org/downloads.html")
+    print("    3. 安装pdfkit: pip install pdfkit")
+    print("  其他系统:")
+    print("    - macOS: brew install wkhtmltopdf")
+    print("    - Linux: sudo apt-get install wkhtmltopdf")
+    print("    - weasyprint: pip install weasyprint (Linux/macOS更稳定)")
+    print("\n  提示: HTML文件已生成，您可以直接在浏览器中查看或打印为PDF")
 
 if __name__ == "__main__":
     main()
