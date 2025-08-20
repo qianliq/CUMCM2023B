@@ -104,17 +104,6 @@ for i in range(len(coverage_areas) - 1):
         ax.fill_between(overlap_x, overlap_y - 2, overlap_y + 2, 
                         alpha=0.5, color='yellow', 
                         label='Overlap Area' if i == 0 else '')
-        
-        # Calculate overlap rate
-        W1 = abs(right_x1 - left_x1)
-        overlap_width = overlap_right - overlap_left
-        overlap_rate = overlap_width / W1 * 100
-        
-        mid_overlap_x = (overlap_left + overlap_right) / 2
-        mid_overlap_y = seabed_depth - slope * mid_overlap_x
-        ax.text(mid_overlap_x, mid_overlap_y + 3, f'η={overlap_rate:.1f}%', 
-                ha='center', va='bottom', fontsize=9, fontweight='bold',
-                bbox=dict(boxstyle='round,pad=0.2', facecolor='yellow', alpha=0.8))
 
 # Add survey line labels
 for i, ship_x in enumerate(survey_lines):
@@ -144,6 +133,17 @@ ax.grid(True, alpha=0.3)
 ax.legend(loc='upper right', fontsize=10)
 
 # Set equal aspect ratio
+ax.set_aspect('equal', adjustable='box')
+
+# Add parameter text box
+textstr = 'Parameters:\nBeam Angle: 120°\nSlope: 3.0°\nSurvey Lines: 5\nSpacing: 60m'
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.9)
+ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=10,
+        verticalalignment='top', bbox=props)
+
+plt.tight_layout()
+plt.savefig('/Users/qadg/Project/CUMCM2023B/multi_beam_survey_lines.png', dpi=300, bbox_inches='tight')
+plt.show()
 ax.set_aspect('equal', adjustable='box')
 
 # Add parameter text box
